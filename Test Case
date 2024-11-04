@@ -1,0 +1,46 @@
+if __name__ == "__main__":
+    #Create test instances of the classes
+    ebook = EBook("https://ebook.com")
+    customer = Customer("Maryam Saeed", "maryam.saeed@email.com", "123456789", True)
+    order = Order("2024-10-12", 100.0, customer)
+    payment = Payment("2024-10-12", 100.0)
+    discount = Discount(0.10, 0.05)
+    catalog = Catalog()
+    cart = ShoppingCart()
+    invoice = Invoice("2024-10-12", [ebook], 100.0)
+
+    #Add the eBook to the catalog
+    catalog.add_ebook(ebook)
+    assert len(catalog._Catalog__ebook_list) == 1, "Test failed: eBook was not added to catalog"
+    #Modify eBook (update URL)
+    ebook.set_url("https://updated-ebook.com")
+    assert ebook.get_url() == "https://updated-ebook.com", "Test failed: eBook URL was not updated"
+    #Remove eBook from the catalog
+    catalog.remove_ebook(ebook)
+    assert len(catalog._Catalog__ebook_list) == 0, "Test failed: eBook was not removed from catalog"
+
+    #Modify customer details
+    customer._Customer__contact_number = "987654321"
+    assert customer._Customer__contact_number == "987654321", "Test failed: Customer contact number was not updated"
+
+
+    #Add the eBook back to the catalog and cart
+    catalog.add_ebook(ebook)
+    cart.add_item(ebook)
+    assert cart._ShoppingCart__total_quantity == 1, "Test failed: eBook was not added to shopping cart"
+    cart.update_quantity(ebook, 2)
+    assert cart._ShoppingCart__total_quantity == 3, "Test failed: Quantity was not updated in shopping cart"
+    cart.remove_item(ebook)
+    assert cart._ShoppingCart__total_quantity == 2, "Test failed: eBook was not removed from shopping cart"
+
+    #Loyalty discount for a loyal customer
+    loyalty_discount = discount.apply_loyalty_discount(customer)
+    assert loyalty_discount == 0.10, "Test failed: Loyalty discount was not applied correctly"
+    bulk_discount = discount.apply_bulk_discount(15)
+    assert bulk_discount == 0.05, "Test failed: Bulk discount was not applied correctly"
+
+    invoice_text = invoice.generate_invoice(order)
+    expected_invoice_text = "Invoice(Date: 2024-10-12, Subtotal: 100.0, Total with VAT: 108.0)"
+    assert invoice_text == expected_invoice_text, "Test failed: Invoice text does not match expected output"
+
+    print("All tests passed!")
