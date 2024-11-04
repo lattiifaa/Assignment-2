@@ -1,0 +1,251 @@
+class EBook:
+    # Initialize an EBook with a URL
+    def __init__(self, url: str):
+        self.__url = url
+
+    def get_url(self) -> str:
+        return self.__url
+
+    def set_url(self, url: str):
+        self.__url = url
+
+    def __str__(self) -> str:
+        return f"EBook(URL: {self.__url})"
+class EBook:
+    # Initialize an EBook with a URL
+    def __init__(self, url: str):
+        self.__url = url
+
+    def get_url(self) -> str:
+        return self.__url
+
+    def set_url(self, url: str):
+        self.__url = url
+
+    def __str__(self) -> str:
+        return f"EBook(URL: {self.__url})"
+
+
+class Customer:
+    #Initialize a Customer with name, email, contact number, and loyalty status
+    def __init__(self, name: str, email: str, contact_number: str, loyalty_status: bool):
+        self.__name = name
+        self.__email = email
+        self.__contact_number = contact_number
+        self.__loyalty_status = loyalty_status
+
+    def get_discount(self) -> float:
+        return 0.1 if self.__loyalty_status else 0.0
+
+    def __str__(self) -> str:
+        return f"Customer(Name: {self.__name}, Email: {self.__email}, Loyalty: {self.__loyalty_status})"
+
+
+class Order:
+    #Initialize an Order with a date, total, and customer
+    def __init__(self, order_date: str, order_total: float, customer: Customer):
+        self.__order_date = order_date
+        self.__order_total = order_total
+        self.__customer = customer
+
+    def calculate_total(self) -> float:
+        return self.__order_total
+
+    def __str__(self) -> str:
+        return f"Order(Date: {self.__order_date}, Total: {self.__order_total}, Customer: {self.__customer})"
+
+
+class Payment:
+    #Initialize a Payment with a date and amount
+    def __init__(self, payment_date: str, amount: float):
+        self.__payment_date = payment_date
+        self.__amount = amount
+
+    def process_payment(self, order: Order) -> bool:
+        return self.__amount >= order.calculate_total()
+
+    def __str__(self) -> str:
+        return f"Payment(Date: {self.__payment_date}, Amount: {self.__amount})"
+
+
+class Discount:
+    #Initialize Discount with loyalty and bulk discount rates
+    def __init__(self, loyalty_discount: float, bulk_discount: float):
+        self.__loyalty_discount = loyalty_discount
+        self.__bulk_discount = bulk_discount
+
+    def apply_loyalty_discount(self, customer: Customer) -> float:
+        return self.__loyalty_discount if customer.get_discount() > 0 else 0.0
+
+    def apply_bulk_discount(self, quantity: int) -> float:
+        return self.__bulk_discount if quantity > 10 else 0.0
+
+
+class Catalog:
+    #Initialize Catalog with an empty list of eBooks
+    def __init__(self):
+        self.__ebook_list = []
+
+    def add_ebook(self, ebook: EBook):
+        self.__ebook_list.append(ebook)
+
+    def remove_ebook(self, ebook: EBook):
+        if ebook in self.__ebook_list:
+            self.__ebook_list.remove(ebook)
+
+    def search(self, title: str) -> EBook:
+        for ebook in self.__ebook_list:
+            if title in str(ebook):
+                return ebook
+        return None
+
+    def __str__(self) -> str:
+        return f"Catalog with {len(self.__ebook_list)} eBooks."
+
+
+class ShoppingCart:
+    #Initialize ShoppingCart with empty cart items and zero total quantity
+    def __init__(self):
+        self.__cart_items = []
+        self.__total_quantity = 0
+
+    def add_item(self, item: EBook):
+        self.__cart_items.append(item)
+        self.__total_quantity += 1
+
+    def remove_item(self, item: EBook):
+        if item in self.__cart_items:
+            self.__cart_items.remove(item)
+            self.__total_quantity -= 1
+
+    def update_quantity(self, item: EBook, quantity: int):
+        if item in self.__cart_items:
+            self.__total_quantity += quantity
+
+    def __str__(self) -> str:
+        return f"ShoppingCart with {self.__total_quantity} items."
+
+
+class Invoice:
+    #Initialize Invoice with date, items, and subtotal
+    def __init__(self, invoice_date: str, items: list, subtotal: float):
+        self.__invoice_date = invoice_date
+        self.__items = items
+        self.__subtotal = subtotal
+        self.__vat_rate = 0.08
+
+    def generate_invoice(self, order: Order) -> str:
+        total = self.__subtotal + (self.__subtotal * self.__vat_rate)
+        return f"Invoice(Date: {self.__invoice_date}, Subtotal: {self.__subtotal}, Total with VAT: {total})"
+
+class Customer:
+    #Initialize a Customer with name, email, contact number, and loyalty status
+    def __init__(self, name: str, email: str, contact_number: str, loyalty_status: bool):
+        self.__name = name
+        self.__email = email
+        self.__contact_number = contact_number
+        self.__loyalty_status = loyalty_status
+
+    def get_discount(self) -> float:
+        return 0.1 if self.__loyalty_status else 0.0
+
+    def __str__(self) -> str:
+        return f"Customer(Name: {self.__name}, Email: {self.__email}, Loyalty: {self.__loyalty_status})"
+
+
+class Order:
+    #Initialize an Order with a date, total, and customer
+    def __init__(self, order_date: str, order_total: float, customer: Customer):
+        self.__order_date = order_date
+        self.__order_total = order_total
+        self.__customer = customer
+
+    def calculate_total(self) -> float:
+        return self.__order_total
+
+    def __str__(self) -> str:
+        return f"Order(Date: {self.__order_date}, Total: {self.__order_total}, Customer: {self.__customer})"
+
+
+class Payment:
+    #Initialize a Payment with a date and amount
+    def __init__(self, payment_date: str, amount: float):
+        self.__payment_date = payment_date
+        self.__amount = amount
+
+    def process_payment(self, order: Order) -> bool:
+        return self.__amount >= order.calculate_total()
+
+    def __str__(self) -> str:
+        return f"Payment(Date: {self.__payment_date}, Amount: {self.__amount})"
+
+
+class Discount:
+    #Initialize Discount with loyalty and bulk discount rates
+    def __init__(self, loyalty_discount: float, bulk_discount: float):
+        self.__loyalty_discount = loyalty_discount
+        self.__bulk_discount = bulk_discount
+
+    def apply_loyalty_discount(self, customer: Customer) -> float:
+        return self.__loyalty_discount if customer.get_discount() > 0 else 0.0
+
+    def apply_bulk_discount(self, quantity: int) -> float:
+        return self.__bulk_discount if quantity > 10 else 0.0
+
+
+class Catalog:
+    #Initialize Catalog with an empty list of eBooks
+    def __init__(self):
+        self.__ebook_list = []
+
+    def add_ebook(self, ebook: EBook):
+        self.__ebook_list.append(ebook)
+
+    def remove_ebook(self, ebook: EBook):
+        if ebook in self.__ebook_list:
+            self.__ebook_list.remove(ebook)
+
+    def search(self, title: str) -> EBook:
+        for ebook in self.__ebook_list:
+            if title in str(ebook):
+                return ebook
+        return None
+
+    def __str__(self) -> str:
+        return f"Catalog with {len(self.__ebook_list)} eBooks."
+
+
+class ShoppingCart:
+    #Initialize ShoppingCart with empty cart items and zero total quantity
+    def __init__(self):
+        self.__cart_items = []
+        self.__total_quantity = 0
+
+    def add_item(self, item: EBook):
+        self.__cart_items.append(item)
+        self.__total_quantity += 1
+
+    def remove_item(self, item: EBook):
+        if item in self.__cart_items:
+            self.__cart_items.remove(item)
+            self.__total_quantity -= 1
+
+    def update_quantity(self, item: EBook, quantity: int):
+        if item in self.__cart_items:
+            self.__total_quantity += quantity
+
+    def __str__(self) -> str:
+        return f"ShoppingCart with {self.__total_quantity} items."
+
+
+class Invoice:
+    #Initialize Invoice with date, items, and subtotal
+    def __init__(self, invoice_date: str, items: list, subtotal: float):
+        self.__invoice_date = invoice_date
+        self.__items = items
+        self.__subtotal = subtotal
+        self.__vat_rate = 0.08
+
+    def generate_invoice(self, order: Order) -> str:
+        total = self.__subtotal + (self.__subtotal * self.__vat_rate)
+        return f"Invoice(Date: {self.__invoice_date}, Subtotal: {self.__subtotal}, Total with VAT: {total})"
